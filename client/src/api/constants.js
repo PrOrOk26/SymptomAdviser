@@ -12,11 +12,16 @@ export default {
     'p_21' // Middle East
   ],
   defaultRiskFactors: [
+    'p_6', // BMI below 19
     'p_7', // BMI over 30
     'p_8', // Diabetes
     'p_9', // Hypertension
     'p_42', // Pregnancy
     'p_147', // Physical injury
-    'p_28' // Smoking
+    'p_28', // Smoking
+    'p_144',
+    'p_146',
+    'p_136',
+    'p_53',
   ]
 };

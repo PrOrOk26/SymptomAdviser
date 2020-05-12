@@ -39,11 +39,9 @@
     name: 'StepParse',
     computed: {
       ...mapState({
-        isLoading: (state) => state.api.isLoading
+        isLoading: (state) => state.api.isLoading,
+        parsedSymptoms: state => state.api.parsedSymptoms
       }),
-      ...mapGetters({
-        parsedSymptoms: 'parsedSymptoms'
-      })
     },
     methods: {
       ...mapActions(

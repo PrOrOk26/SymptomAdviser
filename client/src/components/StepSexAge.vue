@@ -4,38 +4,48 @@
     <div class="step-sexage">
       <div class="step-sexage__form">
         <label class="step-sexage--field">Sex</label>
-        <BaseRadio v-model="sex" label="Male" check-value="male"/>
-        <BaseRadio v-model="sex" label="Female" check-value="female"/>
+        <BaseRadio v-model="sex" label="Male" check-value="male" />
+        <BaseRadio v-model="sex" label="Female" check-value="female" />
       </div>
       <div class="step-sexage__form">
         <label class="step-sexage--field">Age</label>
-        <BaseInput v-model.number="age" class="step-sexage__value"/>
+        <BaseInput v-model.number="age" class="step-sexage__value" />
       </div>
     </div>
   </Step>
 </template>
 
 <script>
-  import BaseRadio from './common/BaseRadio';
-  import BaseInput from './common/BaseInput';
+  import BaseRadio from './common/BaseRadio'
+  import BaseInput from './common/BaseInput'
 
   export default {
     name: 'StepSexAge',
     computed: {
       sex: {
         get() {
-          return this.$store.state.patient.sex;
+          debugger;
+          return this.$store.getters.currentPatient.sex
         },
         set(sex) {
-          this.$store.commit('SET_SEX', sex);
+          debugger;
+          this.$store.commit('SET_PATIENT_SEX', {
+            patientId: this.$store.state.patients.currentPatientId,
+            sex
+          })
         }
       },
       age: {
         get() {
-          return this.$store.state.patient.age;
+          debugger;
+          return this.$store.getters.currentPatient.age
         },
         set(age) {
-          this.$store.commit('SET_AGE', age);
+          debugger;
+          this.$store.commit('SET_PATIENT_AGE', {
+            patientId: this.$store.state.patients.currentPatientId,
+            age
+          })
         }
       }
     },
@@ -43,7 +53,7 @@
       BaseRadio,
       BaseInput
     }
-  };
+  }
 </script>
 
 <style lang="scss">

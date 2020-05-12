@@ -15,7 +15,7 @@
         Next question &gt;
       </button>
       <button v-else-if="step !== 'StepDiagnosis'" :disabled="step === 'StepParse' && parsedSymptoms.length === 0"
-              :title="btnPopoverText" class="main__button" @click="$store.dispatch('nextStep')">
+              :title="btnPopoverText" class="main__button" @click="nextStep">
         {{ nextStepText }} &gt;
       </button>
     </div>
@@ -36,13 +36,13 @@
     computed: {
       ...mapGetters({
         index: 'activeStepIndex',
-        parsedSymptoms: 'parsedSymptoms'
       }),
       ...mapState({
         step: (state) => state.steps.activeStep,
         shouldStop: (state) => state.api.shouldStop,
         question: (state) => state.api.question,
-        questionCounter: (state) => state.api.questionCounter
+        questionCounter: (state) => state.api.questionCounter,
+        parsedSymptoms: (state) => state.api.parsedSymptoms,
       }),
       displayNextQuestion() {
         return (this.step === 'StepDiagnosis' && this.question && this.shouldStop !== true);
@@ -68,6 +68,12 @@
         }
       },
       nextStep() {
+        debugger;
+        if(this.step === 'StepParse') {
+          debugger;
+          this.$store.dispatch('mergeParsedSymptoms');
+        }
+
         this.$store.dispatch('nextStep');
       },
       diagnose() {

@@ -5,13 +5,15 @@ import {arrayContains, findIndex} from '../utils';
 export default {
 
   parse: async ({
-    rootState, commit, dispatch
+    rootState, getters, commit, dispatch
   }, value) => {
     try {
       commit('SET_LOADING', true);
       const res = await api.parse({
         text: value
       });
+
+      debugger;
       res.data.mentions.forEach((mention) => {
         const evidence = {
           id: mention.id,
@@ -19,8 +21,8 @@ export default {
           common_name: mention.common_name,
           initial: true
         };
-        if (!arrayContains(rootState.patient.evidence, {id: mention.id})) {
-          commit('ADD_EVIDENCE', evidence);
+        if (!arrayContains(rootState.api.parsedSymptoms, {id: mention.id})) {
+          commit('ADD_PARSED_SYMPTOM', evidence);
         }
       });
       commit('SET_LOADING', false);
@@ -57,8 +59,8 @@ export default {
     try {
       commit('SET_LOADING', true);
       const res = await api.suggest({
-        sex: rootState.patient.sex,
-        age: rootState.patient.age,
+        sex: getters.currentPatient.sex,
+        age: getters.currentPatient.age,
         selected: getters.evidenceIds
       });
       commit('SET_SUGGESTIONS', res.data);
@@ -76,11 +78,13 @@ export default {
       commit('SET_LOADING', true);
       const res = await api.diagnosis(getters.diagnosisData);
 
+      debugger;
       commit('SET_SHOULD_STOP', res.data.should_stop);
       if (res.data.should_stop === true) {
         commit('SET_CONDITIONS', res.data.conditions);
         dispatch('triage');
       }
+
       if (evidences && evidences.length > 0) { // for selecting previous question
         res.data.question.selected = [];
         evidences.forEach((evidence) => {
