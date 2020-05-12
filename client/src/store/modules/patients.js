@@ -56,7 +56,7 @@ export default {
     },
     MERGE_PARSED_SYMPTOMS(state, parsedSymptoms) {
       const patient = state.patients.find(p => p.id === state.currentPatientId);
-      debugger;
+      ;
       state.patients = [
         ...state.patients.filter(p => p.id !== state.currentPatientId),
         {
@@ -89,7 +89,7 @@ export default {
   },
   getters: {
     currentPatient: (state) => {
-      debugger;
+      ;
       return state.patients.find(p => p.id === state.currentPatientId);
     },
     getPatientById: (state) => (id) => {

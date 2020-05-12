@@ -13,7 +13,7 @@ export default {
         text: value
       });
 
-      debugger;
+      ;
       res.data.mentions.forEach((mention) => {
         const evidence = {
           id: mention.id,
@@ -78,7 +78,7 @@ export default {
       commit('SET_LOADING', true);
       const res = await api.diagnosis(getters.diagnosisData);
 
-      debugger;
+      ;
       commit('SET_SHOULD_STOP', res.data.should_stop);
       if (res.data.should_stop === true) {
         commit('SET_CONDITIONS', res.data.conditions);

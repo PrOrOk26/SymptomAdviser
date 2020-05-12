@@ -81,7 +81,7 @@ export default {
 
   actions: {
     removeParsedSymptom({ rootState, commit, getters, state }, symptomId) {
-      debugger;
+      ;
       commit("REMOVE_PARSED_SYMPTOM", symptomId);
     },
 
@@ -228,7 +228,7 @@ export default {
           otherEvidences: []
         }
       );
-      debugger;
+      ;
       commit("SET_PATIENT_EVIDENCES", {
         patientId: rootState.patients.currentPatientId,
         evidences: otherEvidences
@@ -240,7 +240,7 @@ export default {
       const filteredEvidences = getters.currentPatient.evidence.filter(
         evidence => !evidence.counter
       );
-      debugger;
+      ;
       commit("SET_PATIENT_EVIDENCES", {
         patientId: rootState.patients.currentPatientId,
         evidences: filteredEvidences
@@ -275,7 +275,7 @@ export default {
       state.parsedSymptoms.push(symptom)
     },
     REMOVE_PARSED_SYMPTOM(state, symptomId) {
-      debugger;
+      ;
       state.parsedSymptoms = state.parsedSymptoms.filter(s => s.id !== symptomId)
     },
     PUSH_RISK_FACTOR(state, riskFactor) {

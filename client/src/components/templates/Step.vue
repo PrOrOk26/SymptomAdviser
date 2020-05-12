@@ -68,9 +68,9 @@
         }
       },
       nextStep() {
-        debugger;
+        ;
         if(this.step === 'StepParse') {
-          debugger;
+          ;
           this.$store.dispatch('mergeParsedSymptoms');
         }
 

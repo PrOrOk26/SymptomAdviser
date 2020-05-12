@@ -24,11 +24,11 @@
     computed: {
       sex: {
         get() {
-          debugger;
+          ;
           return this.$store.getters.currentPatient.sex
         },
         set(sex) {
-          debugger;
+          ;
           this.$store.commit('SET_PATIENT_SEX', {
             patientId: this.$store.state.patients.currentPatientId,
             sex
@@ -37,11 +37,11 @@
       },
       age: {
         get() {
-          debugger;
+          ;
           return this.$store.getters.currentPatient.age
         },
         set(age) {
-          debugger;
+          ;
           this.$store.commit('SET_PATIENT_AGE', {
             patientId: this.$store.state.patients.currentPatientId,
             age
