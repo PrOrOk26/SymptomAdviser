@@ -1,55 +1,31 @@
 <template>
   <div id="app" class="app">
-    <AppHeader/>
-    <Error v-if="isError"/>
-    <transition :name="transitionName" mode="out-in">
-      <keep-alive exclude="StepDiagnosis">
-        <component :is="step" :key="step"/>
-      </keep-alive>
-    </transition>
-    <AppFooter/>
+    <AppHeader />
+    <router-view></router-view>
+    <AppFooter />
   </div>
 </template>
 
 <script>
-  import {mapState} from 'vuex';
-  import AppHeader from './components/AppHeader';
-  import AppFooter from './components/AppFooter';
-  import StepWelcome from './components/StepWelcome';
-  import StepSexAge from './components/StepSexAge';
-  import StepParse from './components/StepParse';
-  import StepRiskFactorsCommon from './components/StepRiskFactorsCommon';
-  import StepRiskFactorsMap from './components/StepRiskFactorsMap';
-  import StepSuggest from './components/StepSuggest';
-  import StepDiagnosis from './components/StepDiagnosis';
-  import Error from './components/templates/Error';
+  import { mapState } from 'vuex'
+  import AppHeader from './components/AppHeader'
+  import AppFooter from './components/AppFooter'
+  import SymptomAdviser from './components/SymptomAdviser'
 
   export default {
     name: 'App',
     computed: {
       ...mapState({
-        step: (state) => state.steps.activeStep,
-        transitionName: (state) => state.steps.transition,
-        riskFactors: (state) => state.api.riskFactors,
-        isError: (state) => state.api.isError
+        isError: state => state.api.isError
       })
-    },
-    created() {
-      this.$store.dispatch('loadRiskFactors');
     },
     components: {
       AppHeader,
       AppFooter,
-      StepWelcome,
-      StepSexAge,
-      StepParse,
-      StepRiskFactorsCommon,
-      StepRiskFactorsMap,
-      StepSuggest,
-      StepDiagnosis,
+      SymptomAdviser,
       Error
     }
-  };
+  }
 </script>
 
 <style lang="scss">

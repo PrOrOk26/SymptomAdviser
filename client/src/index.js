@@ -7,8 +7,12 @@ import './assets/styles/main.scss';
 
 import App from './App.vue';
 import Step from './components/templates/Step.vue';
+import VueRouter from 'vue-router';
+import { router } from './components/router/router.js';
 
 Vue.use(VueCookies);
+Vue.use(VueRouter);
+
 VueCookies.config('7d');
 
 Vue.config.productionTip = false;
@@ -18,5 +22,6 @@ Vue.component('Step', Step);
 
 new Vue({
   store,
-  render: (h) => h(App)
+  router,
+  render: (h) => h(App),
 }).$mount('#app');
