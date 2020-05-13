@@ -28,7 +28,7 @@
     }
 
     &__title {
-      font: $font-grand 'Soleil', sans-serif;
+      font: $text-lg 'Soleil', sans-serif;
     }
   }
 </style>

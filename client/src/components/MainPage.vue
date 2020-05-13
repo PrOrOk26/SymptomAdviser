@@ -1,65 +1,42 @@
 <template>
-  <div>
-    <h1>Hello, this is a working router!</h1>
+  <div class='table-container'>
+    <b-table class='table patients-table' striped hover :items="items"></b-table>
     <router-link to="/adviser">Go to adviser</router-link>
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex'
-  import StepWelcome from './StepWelcome'
-  import StepSexAge from './StepSexAge'
-  import StepParse from './StepParse'
-  import StepRiskFactorsCommon from './StepRiskFactorsCommon'
-  import StepRiskFactorsMap from './StepRiskFactorsMap'
-  import StepSuggest from './StepSuggest'
-  import StepDiagnosis from './StepDiagnosis'
-  import Error from './templates/Error'
 
   export default {
     name: 'App',
+    data() {
+      return {
+        items: [
+          { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
+          { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
+          { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
+          { age: 38, first_name: 'Jami', last_name: 'Carney' }
+        ]
+      }
+    },
     computed: {
       ...mapState({
-        step: state => state.steps.activeStep,
-        transitionName: state => state.steps.transition,
-        riskFactors: state => state.api.riskFactors
+        patients: state => state.patients.patients,
       })
     },
     created() {
       this.$store.dispatch('loadRiskFactors')
     },
-    components: {
-      StepWelcome,
-      StepSexAge,
-      StepParse,
-      StepRiskFactorsCommon,
-      StepRiskFactorsMap,
-      StepSuggest,
-      StepDiagnosis
-    }
   }
 </script>
 
 <style lang="scss">
-  body {
-    display: flex;
-    flex: 1;
-    min-height: 100vh;
-    padding: 0;
-    margin: 0;
-    overflow-x: hidden;
-  }
+  .table-container {
+    width: 100%;
 
-  .app {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 100vh;
-    font-family: 'Arial', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: left;
+    .patients-table {
+      position: static;
+    }
   }
 </style>

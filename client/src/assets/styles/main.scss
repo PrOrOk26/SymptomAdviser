@@ -1,4 +1,7 @@
 @import './animations.scss';
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';
+@import './utils.scss';
 
 *,
 * ::before,
@@ -35,14 +38,14 @@ a:visited {
   &__subtitle {
     align-self: center;
     margin: 25px 15px 25px 15px;
-    font: $font-spacious 'Soleil', sans-serif;
+    font: $text-xl 'Soleil', sans-serif;
     color: $dull-blue;
   }
 
   &__caption {
     align-self: center;
     margin: 0 0 15px 0;
-    font-size: $font-grand;
+    font-size: $text-lg;
     color: $dull-blue;
   }
 
@@ -69,7 +72,7 @@ a:visited {
 
   &__title {
     margin-bottom: 20px;
-    font-size: $font-grand;
+    font-size: $text-lg;
     color: $dark-blue;
     text-align: center;
   }
@@ -80,7 +83,7 @@ a:visited {
   align-items: center;
   padding: 10px 15px;
   margin: 15px 2px 15px auto;
-  font-size: $font-regular;
+  font-size: $text-sm;
   color: $main-blue;
   cursor: pointer;
   background: $blank;

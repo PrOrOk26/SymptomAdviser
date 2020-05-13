@@ -88,7 +88,7 @@
 
     &__header {
       margin: 0;
-      font-size: $font-regular;
+      font-size: $text-sm;
     }
 
     &--explain {

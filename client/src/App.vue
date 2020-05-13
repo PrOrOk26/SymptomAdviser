@@ -1,7 +1,9 @@
 <template>
   <div id="app" class="app">
     <AppHeader />
-    <router-view></router-view>
+    <main>
+      <router-view></router-view>
+    </main>
     <AppFooter />
   </div>
 </template>
@@ -49,5 +51,11 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: left;
+
+    main {
+      padding: 1rem 3rem;
+      width: 100%;
+      height: 100%;
+    }
   }
 </style>

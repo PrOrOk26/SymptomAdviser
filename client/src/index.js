@@ -10,8 +10,11 @@ import Step from './components/templates/Step.vue';
 import VueRouter from 'vue-router';
 import { router } from './components/router/router.js';
 
+import { TablePlugin } from 'bootstrap-vue';
+
 Vue.use(VueCookies);
 Vue.use(VueRouter);
+Vue.use(TablePlugin);
 
 VueCookies.config('7d');
 

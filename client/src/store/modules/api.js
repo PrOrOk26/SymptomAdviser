@@ -71,12 +71,6 @@ export default {
         getters.currentPatient.evidence
       );
     },
-
-    /* parsedSymptoms: (state, getters, rootState) => {
-      return getters.currentPatient.evidence.filter(
-        evidence => evidence.initial === true
-      );
-    } */
   },
 
   actions: {

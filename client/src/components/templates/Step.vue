@@ -127,7 +127,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: $font-regular;
+      font-size: $text-sm;
       color: $light-grey;
       cursor: pointer;
       background: transparent;

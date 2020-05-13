@@ -70,7 +70,7 @@
     &__title {
       display: flex;
       margin: 5px 0;
-      font-size: $font-grand;
+      font-size: $text-lg;
       color: $dull-blue;
     }
 
@@ -92,7 +92,7 @@
       height: 10rem;
       max-height: 20rem;
       padding: 6px 10px;
-      font-size: $font-regular;
+      font-size: $text-sm;
       border: 1px solid $pale-grey;
       border-radius: 5px;
     }

@@ -73,7 +73,7 @@
       align-items: center;
       justify-content: center;
       width: 5rem;
-      font-size: $font-grand;
+      font-size: $text-lg;
       color: $dull-blue;
     }
 

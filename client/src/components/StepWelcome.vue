@@ -56,7 +56,7 @@
     }
 
     &__title {
-      font: $font-huge 'Soleil', sans-serif;
+      font: $text-xxxl 'Soleil', sans-serif;
       color: $dull-blue;
     }
 
@@ -64,8 +64,8 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      font-size: $font-regular;
-      line-height: $font-big;
+      font-size: $text-sm;
+      line-height: $text-xxl;
       color: $dark-blue;
     }
   }

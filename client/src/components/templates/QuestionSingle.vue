@@ -50,7 +50,7 @@
       align-items: center;
       padding: 10px 15px;
       margin: 25px;
-      font-size: $font-regular;
+      font-size: $text-sm;
       color: $black;
       cursor: pointer;
       background: $blank;

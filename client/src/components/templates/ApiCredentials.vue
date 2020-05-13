@@ -87,7 +87,7 @@
       align-items: center;
       padding: 10px 15px;
       margin: 15px 2px;
-      font-size: $font-regular;
+      font-size: $text-sm;
       color: $main-blue;
       cursor: pointer;
       background: $blank;

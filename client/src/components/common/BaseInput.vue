@@ -71,7 +71,7 @@
       bottom: 4px;
       left: 4px;
       margin: 0;
-      font-size: $font-grand;
+      font-size: $text-lg;
       transition: bottom 0.3s, left 0.3s, color 0.25s ease;
 
       &--disabled {
@@ -109,7 +109,7 @@
       width: 100%;
       padding-bottom: 3px;
       margin-top: 10px;
-      font-size: $font-great;
+      font-size: $text-md;
       text-align: center;
       text-overflow: ellipsis;
       white-space: nowrap;

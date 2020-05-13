@@ -36,7 +36,7 @@
       flex: 1 1 100%;
       align-items: flex-end;
       justify-content: center;
-      font: $font-spacious 'Soleil', sans-serif;
+      font: $text-xl 'Soleil', sans-serif;
       color: $blank;
       background-color: $light-blue;
       border-color: $light-blue;

@@ -32,7 +32,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    font-size: $font-grand;
+    font-size: $text-lg;
 
     &__header {
       margin: 0;

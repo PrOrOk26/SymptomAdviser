@@ -50,7 +50,7 @@
       display: flex;
       padding-left: 30px;
       margin: 10px 20px 10px 0;
-      font-size: $font-minor;
+      font-size: $text-xs;
       cursor: pointer;
 
       &:hover {
