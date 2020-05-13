@@ -24,7 +24,7 @@ $text-base-size: 1em;
 
 $text-scale-ratio: 1.2;
 
-$text-xs: 1em / $text-scale-ratio / $text-scale-ratio;
+$text-xs: $text-base-size * $text-scale-ratio;
 $text-sm: $text-xs * $text-scale-ratio;
 $text-md: $text-sm * $text-scale-ratio * $text-scale-ratio;
 $text-lg: $text-md * $text-scale-ratio;
@@ -37,10 +37,10 @@ $text-xxxl: $text-xxl * $text-scale-ratio;
     $text-scale-ratio: 1.25;
 }
 
-h1, .text-xxl   { font-size: var($text-xxl, 2.074em); }
-h2, .text-xl    { font-size: var($text-xl, 1.728em); }
-h3, .text-lg    { font-size: var($text-lg, 1.44em); }
-h4, .text-md    { font-size: var($text-md, 1.2em); }
+h1, .text-xxl   { font-size: $text-xxl; }
+h2, .text-xl    { font-size: $text-xl; }
+h3, .text-lg    { font-size: $text-lg; }
+h4, .text-md    { font-size: $text-md; }
 .text-base      { font-size: 1em; }
-small, .text-sm { font-size: var($text-sm, 0.833em); }
-.text-xs        { font-size: var($text-xs, 0.694em); }
+small, .text-sm { font-size: $text-sm; }
+.text-xs        { font-size: $text-xs; }

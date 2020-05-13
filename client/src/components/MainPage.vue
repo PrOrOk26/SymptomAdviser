@@ -1,33 +1,78 @@
 <template>
-  <div class='table-container'>
-    <b-table class='table patients-table' striped hover :items="items"></b-table>
-    <router-link to="/adviser">Go to adviser</router-link>
+  <div class="table-container">
+    <b-table
+      class="table patients-table"
+      responsive
+      striped
+      hover
+      caption-top
+      :items="patients"
+      :fields="fields"
+    >
+      <template v-slot:table-caption>
+        <span class="text-md bold">Your patients</span>
+      </template>
+
+      <template v-slot:cell(actions)="row">
+        <b-button
+          class="mr-1"
+          size="sm"
+          @click="prepareAdviser(row.item.id)"
+        >
+          <router-link to="/adviser" class="a-default no-decoration">Make diagnosis</router-link>
+        </b-button>
+        <b-button size="sm" @click="onShowDetailsClick">Details</b-button>
+      </template>
+    </b-table>
   </div>
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
+  import { BButton } from 'bootstrap-vue'
 
   export default {
     name: 'App',
     data() {
       return {
-        items: [
-          { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-          { age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-          { age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-          { age: 38, first_name: 'Jami', last_name: 'Carney' }
+        fields: [
+          { key: 'name', sortable: true },
+          { key: 'surname', sortable: true },
+          { key: 'sex' },
+          { key: 'age', sortable: true },
+          { key: 'actions', label: 'Actions' }
         ]
       }
     },
     computed: {
       ...mapState({
-        patients: state => state.patients.patients,
+        patients: state => {
+          return state.patients.patients.map(
+            ({ name, surname, sex, age, id }) => {
+              return {
+                id,
+                name,
+                surname,
+                sex,
+                age
+              }
+            }
+          )
+        }
       })
+    },
+    components: {
+      BButton
+    },
+    methods: {
+      ...mapActions(['prepareAdviser']),
+      onShowDetailsClick: e => {
+        console.log('sh')
+      }
     },
     created() {
       this.$store.dispatch('loadRiskFactors')
-    },
+    }
   }
 </script>
 

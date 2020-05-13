@@ -19,6 +19,10 @@ a:visited {
   color: $dull-blue;
 }
 
+.a-default:visited {
+  color: $blank;
+}
+
 .fa-icon {
   display: flex;
   flex: 0 0 auto;

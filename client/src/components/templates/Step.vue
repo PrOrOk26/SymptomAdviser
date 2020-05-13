@@ -14,8 +14,8 @@
               class="main__button" @click="diagnose">
         Next question &gt;
       </button>
-      <button v-else-if="step !== 'StepDiagnosis'" :disabled="step === 'StepParse' && parsedSymptoms.length === 0"
-              :title="btnPopoverText" class="main__button" @click="nextStep">
+      <button v-else-if="step !== 'StepDiagnosis' || shouldStop" :disabled="step === 'StepParse' && parsedSymptoms.length === 0"
+              :title="btnPopoverText" class="main__button" @click="shouldStop ? finishDiagnosis() : nextStep() ">
         {{ nextStepText }} &gt;
       </button>
     </div>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-  import {mapGetters, mapState} from 'vuex';
+  import {mapGetters, mapState, mapActions} from 'vuex';
 
   export default {
     name: 'Step',
@@ -54,10 +54,19 @@
         return 'Click for next step';
       },
       nextStepText() {
-        return (this.step === 'StepWelcome') ? 'Start Interview' : 'Next';
+        if(this.step === 'StepDiagnosis') {
+          return 'Back to patients'
+        }
+        if(this.step === 'StepWelcome') {
+          return 'Start Interview'
+        }
+        return 'Next'
       }
     },
     methods: {
+      ...mapActions(
+        ['appendCurrentPatientDiagnosis']
+      ),
       previousAction() {
         if (this.step === 'StepDiagnosis' && this.questionCounter !== 0
           && !this.shouldStop) {
@@ -68,13 +77,14 @@
         }
       },
       nextStep() {
-        ;
         if(this.step === 'StepParse') {
-          ;
           this.$store.dispatch('mergeParsedSymptoms');
         }
 
         this.$store.dispatch('nextStep');
+      },
+      finishDiagnosis() {
+          this.appendCurrentPatientDiagnosis();
       },
       diagnose() {
         if (this.question.type === 'group_single'
