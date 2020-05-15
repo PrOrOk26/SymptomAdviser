@@ -6,6 +6,8 @@
       striped
       hover
       caption-top
+      bordered
+      sort-icon-left
       :items="patients"
       :fields="fields"
     >
@@ -21,7 +23,9 @@
         >
           <router-link to="/adviser" class="a-default no-decoration">Make diagnosis</router-link>
         </b-button>
-        <b-button size="sm" @click="onShowDetailsClick">Details</b-button>
+        <b-button class="mr-1" variant="info" size="sm" @click="onShowSymptomsClick">Symptoms</b-button>
+        <b-button class="mr-1" size="sm" @click="onEditDetailsClick">Details</b-button>
+        <b-button class="mr-1" variant="danger" size="sm" @click="onDeleteClick">Delete</b-button>
       </template>
     </b-table>
   </div>
@@ -36,6 +40,7 @@
     data() {
       return {
         fields: [
+          { key: 'card_number', sortable: true},
           { key: 'name', sortable: true },
           { key: 'surname', sortable: true },
           { key: 'sex' },
@@ -48,13 +53,14 @@
       ...mapState({
         patients: state => {
           return state.patients.patients.map(
-            ({ name, surname, sex, age, id }) => {
+            ({ name, surname, sex, age, id, card_number = '---' }) => {
               return {
+                card_number,
                 id,
                 name,
                 surname,
                 sex,
-                age
+                age,
               }
             }
           )
@@ -66,9 +72,15 @@
     },
     methods: {
       ...mapActions(['prepareAdviser']),
-      onShowDetailsClick: e => {
+      onShowSymptomsClick: e => {
         console.log('sh')
-      }
+      },
+      onEditDetailsClick: e => {
+        console.log('sh')
+      },
+      onDeleteClick: e => {
+        console.log('sh')
+      },
     },
     created() {
       this.$store.dispatch('loadRiskFactors')

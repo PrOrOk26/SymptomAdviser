@@ -1,4 +1,4 @@
-import { router } from '../../components/router/router.js'
+import { router } from "../../components/router/router.js";
 
 export default {
   state: {
@@ -6,6 +6,7 @@ export default {
       {
         id: 1,
         name: "Vlad",
+        card_number: "432523",
         surname: "Raniuk",
         sex: "male",
         age: "21",
@@ -34,6 +35,7 @@ export default {
       {
         id: 2,
         name: "Andrey",
+        card_number: "472423",
         surname: "Zarubin",
         sex: "male",
         age: "31",
@@ -62,6 +64,7 @@ export default {
       {
         id: 3,
         name: "Timur",
+        card_number: "434323",
         surname: "Zhukotynsky",
         sex: "male",
         age: "19",
@@ -145,14 +148,16 @@ export default {
     SET_CURRENT_PATIENT_ID(state, patientId) {
       state.currentPatientId = patientId;
     },
-    ADD_PATIENT_DIAGNOSIS(state, {patientId, triage, conditions}) {
+    ADD_PATIENT_DIAGNOSIS(state, { patientId, triage, conditions }) {
       debugger;
-      state.patients.find(p => p.id === patientId).diagnosis_history.push({
-        date: Date.now(),
-        triage,
-        conditions,
-      }); 
-      router.push('/')
+      state.patients
+        .find(p => p.id === patientId)
+        .diagnosis_history.push({
+          date: Date.now(),
+          triage,
+          conditions
+        });
+      router.push("/");
     }
   },
   getters: {

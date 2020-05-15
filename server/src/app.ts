@@ -1,15 +1,12 @@
-import express from 'express';
-import axios from 'axios';
-import { api } from './api/api';
+import express, { Request, Response } from 'express';
+import { api } from './controllers/api';
 
-const app: express.Application = express();
+const app = express();
 
 app.use('/api', api);
 
-app.get('/', function (req, res) {
+app.get('/', function (req: Request, res: Response) {
   res.send('Hello World!');
 });
 
-app.listen(3000, function () {
-  console.log('App is listening on port 3000!');
-});
+export default app
