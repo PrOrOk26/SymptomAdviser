@@ -1,7 +1,7 @@
 import express from 'express'
 import { INFERMEDICA_ID, INFERMEDICA_KEY } from '../util/credentials'
 import { Request, Response, NextFunction } from 'express';
-import { RiskFactor } from "../models/RiskFactor";
+import { RiskFactor, RiskFactorDocument } from "../models/RiskFactor";
 
 const router = express.Router()
 
@@ -22,6 +22,7 @@ router.get('/risk_factors', async (req: Request, res: Response, next: NextFuncti
       res.status(500).send("Internal server error");
     });
 
+  console.log(data)
   res.json(data);
 })
 
