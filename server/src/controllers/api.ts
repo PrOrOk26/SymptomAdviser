@@ -1,18 +1,28 @@
 import express from 'express'
-import credentials from '../config/credentials'
-import { Request, Response } from 'express';
+import { INFERMEDICA_ID, INFERMEDICA_KEY } from '../util/credentials'
+import { Request, Response, NextFunction } from 'express';
+import { RiskFactor } from "../models/RiskFactor";
 
 const router = express.Router()
 
 const headers = () => {
   return {
     'content-type': 'application/json',
-    ...credentials,
+    'App-Id': INFERMEDICA_ID,
+    'App-Key': INFERMEDICA_KEY,
   };
 }
 
-router.get('/risk_factors', (req: Request, res: Response) => {
-  res.send('This is a test response')
+router.get('/risk_factors', async (req: Request, res: Response, next: NextFunction) => {
+  const data = await RiskFactor
+    .find({})
+    .exec()
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Internal server error");
+    });
+
+  res.json(data);
 })
 
 export { router as api }
