@@ -2,7 +2,7 @@ import express from 'express'
 import { INFERMEDICA_ID, INFERMEDICA_KEY } from '../util/credentials'
 import { Request, Response, NextFunction } from 'express';
 import { RiskFactor } from "../models/RiskFactor";
-import { Symptoms } from "../models/Symptoms";
+import { Symptoms, RequestSymptoms } from "../models/Symptoms";
 
 const router = express.Router()
 
@@ -25,6 +25,27 @@ router.get('/risk_factors', async (req: Request, res: Response, next: NextFuncti
 
   console.log(data)
   res.json(data);
+})
+
+router.get('/symptoms/:id', async (req: RequestSymptoms, res: Response, next: NextFunction) => {
+  const {
+    id,
+  } = req.params;
+
+  const data = await Symptoms
+    .findOne({ id })
+    .exec()
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Internal server error");
+    });
+
+  if (data) {
+    console.log(data)
+    res.json(data);
+  } else {
+    res.status(404).json({ error: 'No symptom with this id was found' })
+  }
 })
 
 router.get('/symptoms', async (req: Request, res: Response, next: NextFunction) => {

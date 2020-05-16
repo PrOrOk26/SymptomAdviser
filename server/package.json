@@ -5,8 +5,8 @@
 	"main": "./dist/app.js",
 	"scripts": {
 		"start:build": "tsc",
-		"start:run": "node ./dist/server.js",
-		"start": "concurrently npm:start:*"
+		"start:run": "npm run start:build && node ./dist/server.js",
+		"start": "concurrently npm:start:run"
 	},
 	"author": "prorok26",
 	"license": "ISC",

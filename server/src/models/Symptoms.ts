@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { ObjectID } from "mongodb";
+import { Request } from "express";
 
 export type SymptomDocument = mongoose.Document & {
   _id: ObjectID;
@@ -15,6 +16,13 @@ export type SymptomDocument = mongoose.Document & {
   parent_id: string | null;
   parent_relation: string | null;
 };
+
+export interface RequestSymptoms extends Request {
+  params: {
+    id: string;
+    [key: string]: string | undefined;
+  };
+}
 
 const symptomSchema = new mongoose.Schema({
   _id: ObjectID,
