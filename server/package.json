@@ -4,9 +4,9 @@
 	"description": "",
 	"main": "./dist/app.js",
 	"scripts": {
-		"start:build": "tsc",
-		"start:run": "npm run start:build && node ./dist/server.js",
-		"start": "concurrently npm:start:run"
+		"start:build": "tsc -w",
+		"start:run": "nodemon ./dist/server.js",
+		"start": "concurrently npm:start:*"
 	},
 	"author": "prorok26",
 	"license": "ISC",

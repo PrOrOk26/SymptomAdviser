@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import { ObjectID } from "mongodb";
+import { Request } from "express";
 
-export type RiskFactorDocument = mongoose.Document & {
+export type RiskFactorsDocument = mongoose.Document & {
   _id: ObjectID;
   id: string;
   name: string;
@@ -14,7 +15,14 @@ export type RiskFactorDocument = mongoose.Document & {
   image_source: string | null;
 };
 
-const riskFactorSchema = new mongoose.Schema({
+export interface RequestRiskFactors extends Request {
+  params: {
+    id: string;
+    [key: string]: string | undefined;
+  };
+}
+
+const riskFactorsSchema = new mongoose.Schema({
   _id: ObjectID,
   id: String,
   name: String,
@@ -27,4 +35,4 @@ const riskFactorSchema = new mongoose.Schema({
   image_source: String || null,
 }, { timestamps: true });
 
-export const RiskFactor = mongoose.model<RiskFactorDocument>("RiskFactor", riskFactorSchema, "risk_factors");
+export const RiskFactors = mongoose.model<RiskFactorsDocument>("RiskFactors", riskFactorsSchema, "risk_factors");
