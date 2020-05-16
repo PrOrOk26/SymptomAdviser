@@ -3,6 +3,7 @@ import { INFERMEDICA_ID, INFERMEDICA_KEY } from '../util/credentials'
 import { Request, Response, NextFunction } from 'express';
 import { RiskFactors, RequestRiskFactors } from "../models/RiskFactor";
 import { Symptoms, RequestSymptoms } from "../models/Symptoms";
+import { Conditions, RequestConditions } from '../models/Conditions';
 
 const router = express.Router()
 
@@ -30,7 +31,7 @@ router.get('/risk_factors/:id', async (req: RequestRiskFactors, res: Response, n
   if (data) {
     res.json(data);
   } else {
-    res.status(404).json({ error: 'No symptom with this id was found' })
+    res.status(404).json({ error: 'Not found' })
   }
 })
 
@@ -65,12 +66,46 @@ router.get('/symptoms/:id', async (req: RequestSymptoms, res: Response, next: Ne
     console.log(data)
     res.json(data);
   } else {
-    res.status(404).json({ error: 'No symptom with this id was found' })
+    res.status(404).json({ error: 'Not found' })
   }
 })
 
 router.get('/symptoms', async (req: RequestSymptoms, res: Response, next: NextFunction) => {
   const data = await Symptoms
+    .find({})
+    .exec()
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Internal server error");
+    });
+
+  console.log(data)
+  res.json(data);
+})
+
+router.get('/conditions/:id', async (req: RequestConditions, res: Response, next: NextFunction) => {
+  const {
+    id,
+  } = req.params;
+
+  const data = await Conditions
+    .findOne({ id })
+    .exec()
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Internal server error");
+    });
+
+  if (data) {
+    console.log(data)
+    res.json(data);
+  } else {
+    res.status(404).json({ error: 'Not found' })
+  }
+})
+
+router.get('/conditions', async (req: RequestConditions, res: Response, next: NextFunction) => {
+  const data = await Conditions
     .find({})
     .exec()
     .catch((err) => {
