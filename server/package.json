@@ -4,9 +4,12 @@
 	"description": "",
 	"main": "./dist/app.js",
 	"scripts": {
-		"start:build": "tsc -w",
-		"start:run": "nodemon ./dist/server.js",
-		"start": "concurrently npm:start:*"
+		"prod:build": "tsc -p .",
+		"prod:run": "node ./dist/server.js",
+		"prod:start": "concurrently npm:prod:*",
+		"debug:build": "tsc -w -p .",
+		"debug:run": "nodemon --watch ./dist --inspect ./dist/server.js",
+		"debug:start": "concurrently npm:debug:build npm:debug:run"
 	},
 	"author": "prorok26",
 	"license": "ISC",
