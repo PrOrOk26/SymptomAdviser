@@ -3,7 +3,7 @@ import { RequestPatients, Patients, PatientsDocument } from "../models/Patients"
 import { ObjectID } from 'mongodb';
 
 
-export const getPatientsOne = async (req: RequestPatients, res: Response, next: NextFunction) => {
+export const getDoctorPatientsOne = async (req: RequestPatients, res: Response, next: NextFunction) => {
   const {
     doctorId,
     patientId,
@@ -34,7 +34,7 @@ export const getPatientsOne = async (req: RequestPatients, res: Response, next: 
   }
 }
 
-export const getPatients = async (req: RequestPatients, res: Response, next: NextFunction) => {
+export const getDoctorPatients = async (req: RequestPatients, res: Response, next: NextFunction) => {
 
   const {
     doctorId,
@@ -52,7 +52,22 @@ export const getPatients = async (req: RequestPatients, res: Response, next: Nex
   res.json(data);
 }
 
-export const postPatient = async (req: RequestPatients, res: Response, next: NextFunction) => {
+export const getAllPatients = async (req: RequestPatients, res: Response, next: NextFunction) => {
+
+
+  const data = await Patients
+    .find({})
+    .exec()
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Internal server error");
+    });
+
+  console.log(data)
+  res.json(data);
+}
+
+export const postDoctorPatient = async (req: RequestPatients, res: Response, next: NextFunction) => {
 
   const {
     doctorId,
@@ -72,7 +87,7 @@ export const postPatient = async (req: RequestPatients, res: Response, next: Nex
     });
 }
 
-export const deletePatient = async (req: RequestPatients, res: Response, next: NextFunction) => {
+export const deleteDoctorPatient = async (req: RequestPatients, res: Response, next: NextFunction) => {
 
   const {
     doctorId,
@@ -91,7 +106,7 @@ export const deletePatient = async (req: RequestPatients, res: Response, next: N
   res.json(data);
 }
 
-export const putPatient = async (req: RequestPatients, res: Response, next: NextFunction) => {
+export const putDoctorPatient = async (req: RequestPatients, res: Response, next: NextFunction) => {
 
   const {
     patientId: _id,

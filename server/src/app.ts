@@ -1,7 +1,14 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { api } from './controllers/api';
 import { getDoctors, getDoctorsOne } from './controllers/doctors';
-import { getPatients, getPatientsOne, postPatient, putPatient, deletePatient } from './controllers/patients';
+import {
+  getDoctorPatients,
+  getDoctorPatientsOne,
+  postDoctorPatient,
+  putDoctorPatient,
+  deleteDoctorPatient,
+  getAllPatients
+} from './controllers/patients';
 import { getDiagnosticHistory, putDiagnosticHistory } from './controllers/diagnostic_history';
 import { MONGODB_URI } from "./util/credentials";
 import mongoose from "mongoose";
@@ -29,15 +36,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api', api);
-app.get('/doctors/:doctorId/patients/:patientId', getPatientsOne);
-app.get('/doctors/:doctorId/patients', getPatients);
+app.get('/doctors/:doctorId/patients/:patientId', getDoctorPatientsOne);
+app.get('/doctors/:doctorId/patients', getDoctorPatients);
 
 app.get('/doctors/:_id', getDoctorsOne);
 app.get('/doctors', getDoctors);
+app.get('/patients', getAllPatients);
 
-app.post('/doctors/:doctorId/patients', postPatient);
-app.put('/doctors/:doctorId/patients/:patientId', putPatient);
-app.delete('/doctors/:doctorId/patients/:patientId', deletePatient);
+app.post('/doctors/:doctorId/patients', postDoctorPatient);
+app.put('/doctors/:doctorId/patients/:patientId', putDoctorPatient);
+app.delete('/doctors/:doctorId/patients/:patientId', deleteDoctorPatient);
 
 app.get('/patients/:patientId/diagnostic_history', getDiagnosticHistory);
 app.put('/patients/:patientId/diagnostic_history', putDiagnosticHistory);
