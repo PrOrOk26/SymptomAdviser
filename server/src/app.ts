@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import { api } from './controllers/api';
 import { getDoctors, getDoctorsOne } from './controllers/doctors';
 import { getPatients, getPatientsOne, postPatient, putPatient, deletePatient } from './controllers/patients';
+import { getDiagnosticHistory, putDiagnosticHistory } from './controllers/diagnostic_history';
 import { MONGODB_URI } from "./util/credentials";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
@@ -37,6 +38,9 @@ app.get('/doctors', getDoctors);
 app.post('/doctors/:doctorId/patients', postPatient);
 app.put('/doctors/:doctorId/patients/:patientId', putPatient);
 app.delete('/doctors/:doctorId/patients/:patientId', deletePatient);
+
+app.get('/patients/:patientId/diagnostic_history', getDiagnosticHistory);
+app.put('/patients/:patientId/diagnostic_history', putDiagnosticHistory);
 
 app.get('/', function (req: Request, res: Response) {
   res.send('Hello World!');
