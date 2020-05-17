@@ -70,12 +70,11 @@ export default {
         state.suggestions,
         getters.currentPatient.evidence
       );
-    },
+    }
   },
 
   actions: {
     removeParsedSymptom({ rootState, commit, getters, state }, symptomId) {
-      ;
       commit("REMOVE_PARSED_SYMPTOM", symptomId);
     },
 
@@ -222,7 +221,6 @@ export default {
           otherEvidences: []
         }
       );
-      ;
       commit("SET_PATIENT_EVIDENCES", {
         patientId: rootState.patients.currentPatientId,
         evidences: otherEvidences
@@ -234,7 +232,6 @@ export default {
       const filteredEvidences = getters.currentPatient.evidence.filter(
         evidence => !evidence.counter
       );
-      ;
       commit("SET_PATIENT_EVIDENCES", {
         patientId: rootState.patients.currentPatientId,
         evidences: filteredEvidences
@@ -266,11 +263,12 @@ export default {
       state.errors = error;
     },
     ADD_PARSED_SYMPTOM(state, symptom) {
-      state.parsedSymptoms.push(symptom)
+      state.parsedSymptoms.push(symptom);
     },
     REMOVE_PARSED_SYMPTOM(state, symptomId) {
-      ;
-      state.parsedSymptoms = state.parsedSymptoms.filter(s => s.id !== symptomId)
+      state.parsedSymptoms = state.parsedSymptoms.filter(
+        s => s.id !== symptomId
+      );
     },
     PUSH_RISK_FACTOR(state, riskFactor) {
       state.riskFactors.push(riskFactor);

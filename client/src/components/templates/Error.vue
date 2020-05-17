@@ -11,7 +11,7 @@
 </template>
 
 <script>
-	import { mapState } from 'vuex'
+	import { mapState, mapMutations } from 'vuex'
 
 	export default {
 		name: 'Error',
@@ -19,10 +19,12 @@
 			...mapState({
 				isError: state => state.api.isError,
 				errors: state => {
-					debugger
 					return state.api.errors
 				}
 			})
+		},
+		methods: {
+			...mapMutations(['SET_IS_ERROR'])
 		}
 	}
 </script>

@@ -1,4 +1,5 @@
 import api from "../api/InfermedicaApi";
+import medicalDatabaseApi from "../api/medicalDatabaseApi.js";
 import constants from "../api/constants";
 import { arrayContains, findIndex } from "../utils";
 
@@ -31,10 +32,8 @@ export default {
   loadRiskFactors: async ({ commit, dispatch }) => {
     try {
       commit("SET_LOADING", true);
-      debugger;
-      const res = await api.loadRiskFactors();
+      const res = await medicalDatabaseApi.loadRiskFactors();
       console.log(res);
-      debugger;
       dispatch("addRiskFactors", {
         riskFactors: constants.defaultRiskFactors,
         data: res.data
@@ -46,7 +45,6 @@ export default {
       commit("SET_LOADING", false);
       commit("SET_IS_ERROR", false);
     } catch (err) {
-      debugger;
       dispatch("logError", err);
     }
   },

@@ -26,6 +26,11 @@
 			AppFooter,
 			SymptomAdviser,
 			Error
+		},
+		created() {
+			this.$store.dispatch('loadRiskFactors')
+			this.$store.dispatch('loadDoctorInformation', '5ebe9a3c406acd598f9aaac5')
+			this.$store.dispatch('loadDoctorPatients', '5ebe9a3c406acd598f9aaac5')
 		}
 	}
 </script>

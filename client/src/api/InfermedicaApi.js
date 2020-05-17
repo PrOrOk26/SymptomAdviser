@@ -3,7 +3,6 @@ import VueCookies from "vue-cookies";
 
 export default {
   infermedicaUrl: "https://api.infermedica.com/v2",
-  apiUrl: "http://localhost:3000/api",
   headers() {
     return {
       "content-type": "application/json",
@@ -17,14 +16,6 @@ export default {
       url: `${this.infermedicaUrl}/parse`,
       headers: this.headers(),
       data
-    });
-  },
-  loadRiskFactors() {
-    debugger;
-    return axios({
-      method: "get",
-      url: `${this.apiUrl}/risk_factors`,
-      headers: this.headers()
     });
   },
   suggest(data) {

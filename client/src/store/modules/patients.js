@@ -1,109 +1,26 @@
 import { router } from "../../components/router/router.js";
+import medicalDatabaseApi from "../../api/medicalDatabaseApi.js";
 
 export default {
   state: {
-    patients: [
-      {
-        id: 1,
-        name: "Vlad",
-        card_number: "432523",
-        surname: "Raniuk",
-        sex: "male",
-        age: "21",
-        evidence: [
-          {
-            id: "s_156",
-            common_name: "Nausea",
-            choice_id: "present",
-            initial: true
-          },
-          {
-            id: "s_13",
-            common_name: "Abdominal pain",
-            choice_id: "present",
-            initial: true
-          },
-          {
-            id: "s_8",
-            common_name: "Diarrhea",
-            choice_id: "present",
-            initial: true
-          }
-        ],
-        diagnosis_history: []
-      },
-      {
-        id: 2,
-        name: "Andrey",
-        card_number: "472423",
-        surname: "Zarubin",
-        sex: "male",
-        age: "31",
-        evidence: [
-          {
-            id: "s_156",
-            common_name: "Nausea",
-            choice_id: "present",
-            initial: true
-          },
-          {
-            id: "s_13",
-            common_name: "Abdominal pain",
-            choice_id: "present",
-            initial: true
-          },
-          {
-            id: "s_8",
-            common_name: "Diarrhea",
-            choice_id: "present",
-            initial: true
-          }
-        ],
-        diagnosis_history: []
-      },
-      {
-        id: 3,
-        name: "Timur",
-        card_number: "434323",
-        surname: "Zhukotynsky",
-        sex: "male",
-        age: "19",
-        evidence: [
-          {
-            id: "s_156",
-            common_name: "Nausea",
-            choice_id: "present",
-            initial: true
-          },
-          {
-            id: "s_13",
-            common_name: "Abdominal pain",
-            choice_id: "present",
-            initial: true
-          },
-          {
-            id: "s_8",
-            common_name: "Diarrhea",
-            choice_id: "present",
-            initial: true
-          }
-        ],
-        diagnosis_history: []
-      }
-    ],
-    currentPatientId: 1
+    doctor: {
+      _id: "",
+      name: "",
+      surname: "",
+      specialty: ""
+    },
+    patients: [],
+    diagnostic_history: [],
+    arePatientsLoading: false,
+    currentPatientId: ""
   },
 
   mutations: {
-    ADD_PATIENT(state, patient) {
-      state.patients = [...state.patients, patient];
-
-      // should be an action later, because we need to update the database
+    ADD_PATIENTS(state, patients) {
+      state.patients = [...state.patients, ...patients];
     },
     REMOVE_PATIENT(state, patientId) {
       state.patients = [...state.patients.filter(p => p.id !== patientId)];
-
-      // should be an action later, because we need to update the database
     },
     MODIFY_PATIENT_SYMPTOMS(state, { patientId, patientEvidence }) {
       const patient = state.patients.find(p => p.id === patientId);
@@ -148,16 +65,31 @@ export default {
     SET_CURRENT_PATIENT_ID(state, patientId) {
       state.currentPatientId = patientId;
     },
+    SET_PATIENTS_LOADING(state, loadingState) {
+      state.arePatientsLoading = loadingState;
+    },
     ADD_PATIENT_DIAGNOSIS(state, { patientId, triage, conditions }) {
-      debugger;
-      state.patients
-        .find(p => p.id === patientId)
-        .diagnosis_history.push({
-          date: Date.now(),
-          triage,
-          conditions
-        });
+      if (state.diagnostic_history.length) {
+        state.diagnostic_history
+          .find(h => h.patientId === patientId)
+          .push({
+            dateCreated: Date.now(),
+            triage,
+            conditions
+          });
+      }
       router.push("/");
+    },
+    SET_DOCTOR_INFORMATION(state, doctorData) {
+      const { _id = "", name = "", surname = "", specialty = "" } = doctorData;
+
+      debugger;
+      state.doctor = {
+        _id,
+        name,
+        surname,
+        specialty
+      };
     }
   },
   getters: {
@@ -175,8 +107,21 @@ export default {
     prepareAdviser({ rootState, commit }, patientId) {
       commit("SET_CURRENT_PATIENT_ID", patientId);
     },
+    async loadDoctorInformation({ rootState, commit }, doctorId) {
+      const doctorInfo = await medicalDatabaseApi.getDoctorInformation({
+        doctorId
+      });
+      commit("SET_DOCTOR_INFORMATION", doctorInfo.data);
+    },
+    async loadDoctorPatients({ commit }, doctorId) {
+      commit("SET_PATIENTS_LOADING", true);
+      const doctorInfo = await medicalDatabaseApi.getDoctorsPatients({
+        doctorId
+      });
+      commit("ADD_PATIENTS", doctorInfo.data);
+      commit("SET_PATIENTS_LOADING", false);
+    },
     appendCurrentPatientDiagnosis({ rootState, commit, state }) {
-      debugger;
       commit("ADD_PATIENT_DIAGNOSIS", {
         patientId: state.currentPatientId,
         triage: rootState.api.triage,
