@@ -10,7 +10,7 @@ export default {
       specialty: ""
     },
     patients: [],
-    diagnostic_history: [],
+    diagnostic_history: {},
     arePatientsLoading: false,
     currentPatientId: ""
   },
@@ -20,12 +20,12 @@ export default {
       state.patients = [...state.patients, ...patients];
     },
     REMOVE_PATIENT(state, patientId) {
-      state.patients = [...state.patients.filter(p => p.id !== patientId)];
+      state.patients = [...state.patients.filter(p => p._id !== patientId)];
     },
     MODIFY_PATIENT_SYMPTOMS(state, { patientId, patientEvidence }) {
-      const patient = state.patients.find(p => p.id === patientId);
+      const patient = state.patients.find(p => p._id === patientId);
       state.patients = [
-        ...state.patients.filter(p => p.id !== patientId),
+        ...state.patients.filter(p => p._id !== patientId),
         {
           ...patient,
           evidence: [...patient.evidence, patientEvidence]
@@ -33,9 +33,11 @@ export default {
       ];
     },
     MERGE_PARSED_SYMPTOMS(state, parsedSymptoms) {
-      const patient = state.patients.find(p => p.id === state.currentPatientId);
+      const patient = state.patients.find(
+        p => p._id === state.currentPatientId
+      );
       state.patients = [
-        ...state.patients.filter(p => p.id !== state.currentPatientId),
+        ...state.patients.filter(p => p._id !== state.currentPatientId),
         {
           ...patient,
           evidence: [
@@ -48,19 +50,19 @@ export default {
       ];
     },
     SET_PATIENT_SEX(state, { patientId, sex }) {
-      state.patients.find(p => p.id === patientId).sex = sex;
+      state.patients.find(p => p._id === patientId).sex = sex;
     },
     SET_PATIENT_AGE(state, { patientId, age }) {
-      state.patients.find(p => p.id === patientId).age = age;
+      state.patients.find(p => p._id === patientId).age = age;
     },
     ADD_PATIENT_EVIDENCE(state, { patientId, evidence }) {
-      state.patients.find(p => p.id === patientId).evidence.push(evidence);
+      state.patients.find(p => p._id === patientId).evidence.push(evidence);
     },
     REMOVE_PATIENT_EVIDENCE(state, { patientId, index }) {
-      state.patients.find(p => p.id === patientId).evidence.splice(index, 1);
+      state.patients.find(p => p._id === patientId).evidence.splice(index, 1);
     },
     SET_PATIENT_EVIDENCES(state, { patientId, evidences }) {
-      state.patients.find(p => p.id === patientId).evidence = evidences;
+      state.patients.find(p => p._id === patientId).evidence = evidences;
     },
     SET_CURRENT_PATIENT_ID(state, patientId) {
       state.currentPatientId = patientId;
@@ -68,22 +70,25 @@ export default {
     SET_PATIENTS_LOADING(state, loadingState) {
       state.arePatientsLoading = loadingState;
     },
-    ADD_PATIENT_DIAGNOSIS(state, { patientId, triage, conditions }) {
-      if (state.diagnostic_history.length) {
-        state.diagnostic_history
-          .find(h => h.patientId === patientId)
-          .push({
-            dateCreated: Date.now(),
-            triage,
-            conditions
-          });
+    ADD_PATIENT_DIAGNOSIS(state, { patientId, triage, conditions, doctorId }) {
+      const patientDiagnosticHistory = state.diagnostic_history[patientId];
+      const diagnosisEntry = {
+        dateCreated: Date.now(),
+        doctorId,
+        triage,
+        conditions
+      };
+
+      if (patientDiagnosticHistory) {
+        patientDiagnosticHistory.push(diagnosisEntry);
+      } else {
+        state.diagnostic_history[patientId] = [diagnosisEntry];
       }
       router.push("/");
     },
     SET_DOCTOR_INFORMATION(state, doctorData) {
       const { _id = "", name = "", surname = "", specialty = "" } = doctorData;
 
-      debugger;
       state.doctor = {
         _id,
         name,
@@ -94,10 +99,10 @@ export default {
   },
   getters: {
     currentPatient: state => {
-      return state.patients.find(p => p.id === state.currentPatientId);
+      return state.patients.find(p => p._id === state.currentPatientId);
     },
-    getPatientById: state => id => {
-      return state.patients.find(p => p.id === id);
+    getPatientById: state => _id => {
+      return state.patients.find(p => p._id === _id);
     }
   },
   actions: {
@@ -124,6 +129,7 @@ export default {
     appendCurrentPatientDiagnosis({ rootState, commit, state }) {
       commit("ADD_PATIENT_DIAGNOSIS", {
         patientId: state.currentPatientId,
+        doctorId: state.doctor._id,
         triage: rootState.api.triage,
         conditions: rootState.api.conditions
       });

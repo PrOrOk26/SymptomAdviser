@@ -17,7 +17,7 @@
 			</template>
 
 			<template v-if="patients.length" v-slot:cell(actions)="row">
-				<b-button class="mr-1" size="sm" @click="prepareAdviser(row.item.id)">
+				<b-button class="mr-1" size="sm" @click="prepareAdviser(row.item._id)">
 					<router-link to="/adviser" class="a-default no-decoration">Make diagnosis</router-link>
 				</b-button>
 				<b-button class="mr-1" variant="info" size="sm" @click="onShowSymptomsClick">Symptoms</b-button>
