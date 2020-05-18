@@ -71,9 +71,6 @@
 				isError: state => state.api.isError
 			})
 		},
-		created() {
-			this.prepareAdviser(this.patients.length ? this.patients[0]._id : 'bulk')
-		},
 		components: {
 			BButton,
 			Error

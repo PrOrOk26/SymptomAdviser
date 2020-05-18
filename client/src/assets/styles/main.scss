@@ -1,7 +1,7 @@
-@import './animations.scss';
-@import 'node_modules/bootstrap/scss/bootstrap';
-@import 'node_modules/bootstrap-vue/src/index.scss';
-@import './utils.scss';
+@import "./animations.scss";
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap-vue/src/index.scss";
+@import "./utils.scss";
 
 *,
 * ::before,
@@ -19,6 +19,7 @@ a:visited {
   color: $dull-blue;
 }
 
+.a-default,
 .a-default:visited {
   color: $blank;
 }
@@ -42,7 +43,7 @@ a:visited {
   &__subtitle {
     align-self: center;
     margin: 25px 15px 25px 15px;
-    font: $text-xl 'Soleil', sans-serif;
+    font: $text-xl "Soleil", sans-serif;
     color: $dull-blue;
   }
 

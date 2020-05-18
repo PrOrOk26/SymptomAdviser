@@ -12,7 +12,7 @@ export default {
     patients: [],
     diagnostic_history: {},
     arePatientsLoading: false,
-    currentPatientId: ""
+    currentPatientId: "bulk"
   },
 
   mutations: {
@@ -109,7 +109,7 @@ export default {
     mergeParsedSymptoms({ rootState, commit, getters, state }) {
       commit("MERGE_PARSED_SYMPTOMS", rootState.api.parsedSymptoms);
     },
-    prepareAdviser({ rootState, commit }, patientId) {
+    prepareAdviser({ rootState, commit, state }, patientId) {
       commit("SET_CURRENT_PATIENT_ID", patientId);
     },
     async loadDoctorInformation({ rootState, commit }, doctorId) {
@@ -124,6 +124,10 @@ export default {
         doctorId
       });
       commit("ADD_PATIENTS", doctorInfo.data);
+      commit(
+        "SET_CURRENT_PATIENT_ID",
+        doctorInfo.data.length ? doctorInfo.data[0]._id : "bulk"
+      );
       commit("SET_PATIENTS_LOADING", false);
     },
     appendCurrentPatientDiagnosis({ rootState, commit, state }) {

@@ -27,7 +27,6 @@ export default {
   getDoctorInformation(params) {
     const { doctorId } = params;
 
-    debugger;
     return axios({
       method: "get",
       url: `${this.apiUrl}/doctors/${doctorId}`,
