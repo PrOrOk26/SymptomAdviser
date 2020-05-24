@@ -43,3 +43,24 @@ export const putDiagnosticHistory = async (req: RequestDiagnosticHistory, res: R
 
   res.json(await DiagnosticHistory.findOne({ patientId }))
 }
+
+export const postDiagnosticHistory = async (req: RequestDiagnosticHistory, res: Response, next: NextFunction) => {
+
+  const {
+    patientId,
+  } = req.params;
+
+  const newDiagnosticHistory: DiagnosticHistoryDocument = req.body;
+  console.log('ndh', newDiagnosticHistory)
+
+  const doc = await DiagnosticHistory
+    .insertMany([newDiagnosticHistory])
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Internal server error");
+    });
+
+  console.log('doc', doc)
+
+  res.status(200).json(doc)
+}

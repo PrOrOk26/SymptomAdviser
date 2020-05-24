@@ -9,7 +9,7 @@ import {
   deleteDoctorPatient,
   getAllPatients
 } from './controllers/patients';
-import { getDiagnosticHistory, putDiagnosticHistory } from './controllers/diagnostic_history';
+import { getDiagnosticHistory, putDiagnosticHistory, postDiagnosticHistory } from './controllers/diagnostic_history';
 import { MONGODB_URI } from "./util/credentials";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
@@ -49,6 +49,7 @@ app.delete('/doctors/:doctorId/patients/:patientId', deleteDoctorPatient);
 
 app.get('/patients/:patientId/diagnostic_history', getDiagnosticHistory);
 app.put('/patients/:patientId/diagnostic_history', putDiagnosticHistory);
+app.post('/patients/:patientId/diagnostic_history', postDiagnosticHistory);
 
 app.get('/', function (req: Request, res: Response) {
   res.send('Hello World!');

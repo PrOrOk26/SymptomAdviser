@@ -34,7 +34,6 @@
 			})
 		},
 		created() {
-			debugger
 			if (!this.currentPatientId.length) {
 				this.SET_ERROR({
 					response: {

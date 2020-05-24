@@ -70,14 +70,8 @@ export default {
     SET_PATIENTS_LOADING(state, loadingState) {
       state.arePatientsLoading = loadingState;
     },
-    ADD_PATIENT_DIAGNOSIS(state, { patientId, triage, conditions, doctorId }) {
+    ADD_PATIENT_DIAGNOSIS(state, { patientId, diagnosisEntry }) {
       const patientDiagnosticHistory = state.diagnostic_history[patientId];
-      const diagnosisEntry = {
-        dateCreated: Date.now(),
-        doctorId,
-        triage,
-        conditions
-      };
 
       if (patientDiagnosticHistory) {
         patientDiagnosticHistory.push(diagnosisEntry);
@@ -130,13 +124,25 @@ export default {
       );
       commit("SET_PATIENTS_LOADING", false);
     },
-    appendCurrentPatientDiagnosis({ rootState, commit, state }) {
-      commit("ADD_PATIENT_DIAGNOSIS", {
+    async appendCurrentPatientDiagnosis({ rootState, commit, state }) {
+      const diagnosisEntry = {
+        dateCreated: Date.now(),
         patientId: state.currentPatientId,
         doctorId: state.doctor._id,
         triage: rootState.api.triage,
         conditions: rootState.api.conditions
-      });
+      };
+
+      const params = {
+        patientId: state.currentPatientId,
+        diagnosisEntry
+      };
+
+      const response = await medicalDatabaseApi.addDiagnosticHistoryEntry(
+        params
+      );
+
+      commit("ADD_PATIENT_DIAGNOSIS", params);
     }
   }
 };
