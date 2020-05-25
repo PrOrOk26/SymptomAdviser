@@ -95,7 +95,6 @@ export default {
       } else {
         state.diagnostic_history[patientId] = [diagnosisEntry];
       }
-      router.push("/");
     },
     SET_DOCTOR_INFORMATION(state, doctorData) {
       const { _id = "", name = "", surname = "", specialty = "" } = doctorData;
@@ -159,7 +158,7 @@ export default {
         params
       );
 
-      commit("ADD_PATIENT_DIAGNOSIS", params);
+      router.push("/");
     },
     async getPatientDiagnosisHistory({ rootState, commit, state }, patientId) {
       commit("SET_DIAGNOSTIC_HISTORY_LOADING", true);
