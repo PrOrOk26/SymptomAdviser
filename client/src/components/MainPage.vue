@@ -22,6 +22,12 @@
 				</b-button>
 				<b-button class="mr-1" variant="info" size="sm" @click="onShowSymptomsClick">Symptoms</b-button>
 				<b-button class="mr-1" size="sm" @click="onEditDetailsClick">Details</b-button>
+				<b-button
+					class="mr-1"
+					size="sm"
+					variant="dark"
+					@click="onDiagnosticHistoryClick(row.item._id)"
+				>Diagnostic history</b-button>
 				<b-button class="mr-1" variant="danger" size="sm" @click="onDeleteClick">Delete</b-button>
 			</template>
 			<Icon v-else-if="arePatientsLoading" name="spinner" spin class="main-page__load" />
@@ -36,6 +42,7 @@
 	import { mapState, mapActions } from 'vuex'
 	import { BButton } from 'bootstrap-vue'
 	import Error from './templates/Error'
+	import { router } from './router/router'
 
 	export default {
 		name: 'App',
@@ -79,6 +86,9 @@
 			...mapActions(['prepareAdviser']),
 			onShowSymptomsClick: e => {
 				console.log('sh')
+			},
+			onDiagnosticHistoryClick: patientId => {
+				router.push(`/diagnostic_history/${patientId}`)
 			},
 			onEditDetailsClick: e => {
 				console.log('sh')

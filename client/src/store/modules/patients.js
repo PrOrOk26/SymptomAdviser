@@ -12,6 +12,7 @@ export default {
     patients: [],
     diagnostic_history: {},
     arePatientsLoading: false,
+    isDiagnosticHistoryLoading: false,
     currentPatientId: "bulk"
   },
 
@@ -69,6 +70,22 @@ export default {
     },
     SET_PATIENTS_LOADING(state, loadingState) {
       state.arePatientsLoading = loadingState;
+    },
+    SET_DIAGNOSTIC_HISTORY_LOADING(state, loadingState) {
+      state.isDiagnosticHistoryLoading = loadingState;
+    },
+    APPEND_DIAGNOSTIC_HISTORY(state, { patientId, diagnosisEntries = [] }) {
+      let patientDiagnosticHistory = state.diagnostic_history[patientId];
+
+      debugger;
+
+      state.diagnostic_history = {
+        ...state.diagnostic_history,
+        [patientId]: [
+          ...(patientDiagnosticHistory ? patientDiagnosticHistory : []),
+          ...diagnosisEntries
+        ]
+      };
     },
     ADD_PATIENT_DIAGNOSIS(state, { patientId, diagnosisEntry }) {
       const patientDiagnosticHistory = state.diagnostic_history[patientId];
@@ -143,6 +160,29 @@ export default {
       );
 
       commit("ADD_PATIENT_DIAGNOSIS", params);
+    },
+    async getPatientDiagnosisHistory({ rootState, commit, state }, patientId) {
+      commit("SET_DIAGNOSTIC_HISTORY_LOADING", true);
+
+      debugger;
+      const response = await medicalDatabaseApi.getDiagnosticHistory({
+        patientId
+      });
+
+      debugger;
+      if (response) {
+        commit("APPEND_DIAGNOSTIC_HISTORY", {
+          patientId,
+          diagnosisEntries: response.data
+        });
+      } else {
+        console.log(
+          "something really strange with diagnosis data...",
+          response
+        );
+      }
+
+      commit("SET_DIAGNOSTIC_HISTORY_LOADING", false);
     }
   }
 };

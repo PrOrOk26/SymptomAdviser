@@ -6,7 +6,11 @@ import PatientHistory from "../PatientHistory";
 const routes = [
   { path: "/", component: AppMain },
   { path: "/adviser", component: SymptomAdviser },
-  { path: "/diagnostic_history", component: PatientHistory }
+  {
+    path: "/diagnostic_history/:patientId",
+    component: PatientHistory,
+    props: true
+  }
 ];
 
 const router = new VueRouter({
