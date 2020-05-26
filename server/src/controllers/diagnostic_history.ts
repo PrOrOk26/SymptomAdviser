@@ -15,7 +15,7 @@ export const getDiagnosticHistory = async (req: RequestDiagnosticHistory, res: R
   console.log(patientId)
 
   const data = await DiagnosticHistory
-    .findOne({ patientId })
+    .find({ patientId })
     .exec()
     .catch((err) => {
       console.error(err);
@@ -51,7 +51,6 @@ export const postDiagnosticHistory = async (req: RequestDiagnosticHistory, res: 
   } = req.params;
 
   const newDiagnosticHistory: DiagnosticHistoryDocument = req.body;
-  console.log('ndh', newDiagnosticHistory)
 
   const doc = await DiagnosticHistory
     .insertMany([newDiagnosticHistory])
@@ -59,8 +58,6 @@ export const postDiagnosticHistory = async (req: RequestDiagnosticHistory, res: 
       console.error(err);
       res.status(500).send("Internal server error");
     });
-
-  console.log('doc', doc)
 
   res.status(200).json(doc)
 }
