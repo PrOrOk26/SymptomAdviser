@@ -48,8 +48,9 @@
 			...mapActions(['getPatientDiagnosisHistory'])
 		},
 		created() {
-			debugger
-			this.getPatientDiagnosisHistory(this.patientId)
+			if (!this.diagnostic_history[this.patientId]) {
+				this.getPatientDiagnosisHistory(this.patientId)
+			}
 		},
 		components: {
 			ConditionList,
